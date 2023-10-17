@@ -39,10 +39,12 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
         public int Solve()
         {
             long num = this.Number;
-            bool isEven = this.Number % 2 == 0;
-            int test = isEven ? 2 : 3;
-            int factor = 0;
-            int times = 0;
+            int test = 3;
+            int factor = 2;
+            // First even parts
+            while (num % 2 == 0)
+                num = num / 2;
+            // Then odd numbers
             while (num != 1)
             {
                 while (num % test == 0)
@@ -50,8 +52,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
                     factor = test;
                     num = num / test;
                 }
-                test += isEven ? 1 : 2;
-                times++;
+                test += 2;
             }
             return factor;
         }
