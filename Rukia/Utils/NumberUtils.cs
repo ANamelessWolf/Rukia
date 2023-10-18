@@ -27,5 +27,34 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
         {
             return number % 2 == 0;
         }
+
+
+        public static bool IsPalindrome(this int number, int divSize)
+        {
+            int left, right = 0, num = number;
+            while (divSize > 10)
+            {
+                left = number / divSize;
+                right = right * 10 + num % 10;
+                num /= 10;
+                divSize /= 10;
+                if (left != right)
+                    return false;
+            }
+            return true;
+        }
+
+        public static int Inverse(this int number)
+        {
+            int reverse = 0, remainder;
+            while (number != 0)
+            {
+                remainder = number % 10;
+                reverse = reverse * 10 + remainder;
+                number /= 10;
+            }
+            return reverse;
+        }
+
     }
 }
