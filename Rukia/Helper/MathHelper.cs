@@ -1,4 +1,5 @@
 ﻿using Nameless.Libraries.Rukia.ProjectEuler.Helper.Interface;
+using Nameless.Libraries.Rukia.ProjectEuler.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +30,8 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Helper
             Random rand = new Random((int)DateTime.Now.Ticks);
             return rand.Next(minValue, maxValue);
         }
+
+        
+
     }
 }

@@ -17,6 +17,8 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
                 return PrimeTestResult.NOT_PRIME;
             else if (first_primes.Contains(number))
                 return PrimeTestResult.IS_PRIME;
+            else if (number < first_primes.Max())
+                return PrimeTestResult.NOT_PRIME;
             else
                 return PrimeTestResult.PROBABLY;
         }
