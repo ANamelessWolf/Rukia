@@ -11,4 +11,9 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Helper.Interface
         int Solve();
         string PrintResult();
     }
+      public interface ILongSolution
+    {
+        long Solve();
+        string PrintResult();
+    }
 }
