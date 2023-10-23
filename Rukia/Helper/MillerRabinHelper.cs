@@ -15,42 +15,69 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Helper
         /// And n-1 is and Even number
         /// And r is a natural number
         /// </summary>
-        /// <param name="number">The number to test and find d</param>
+        /// <param name="n">The number to test and find d</param>
         /// <param name="math">The math utils</param>
         /// <returns>The d variable</returns>
-        protected abstract T Find_d(IMath<T> math, T number);
+        protected abstract T Find_d(IMath<T> math, T n);
         /// <summary>
         /// Find a, for the miller rabin test. 
         /// Where a is a random number greater than 1 and less than the number to test
         /// </summary>
-        /// <param name="number">The number to test and find a</param>
+        /// <param name="n">The number to test and find a</param>
         /// <param name="math">The math utils</param>
         /// <returns>The a variable</returns>
-        protected abstract T Find_a(IMath<T> math, T number);
+        protected abstract T Find_a(IMath<T> math, T n);
         /// <summary>
-        /// Computes the value of b0 where the b0 = a^d mod n
+        /// Computes the value of x where the x = a^d mod n
         /// </summary>
         /// <param name="math">The math utils</param>
         /// <param name="d">d variable calc with the Find_d, function</param>
         /// <param name="a">a variable random number</param>
-        /// <param name="number">The number to test</param>
-        /// <returns>b0 calculated value</returns>
-        protected abstract T Computeb0(IMath<T> math, T d, T a, T number);
+        /// <param name="n">The number to test</param>
+        /// <returns>x calculated value</returns>
+        protected abstract T ComputeX(IMath<T> math, T d, T a, T n);
         /// <summary>
-        /// Computes the value of bn where the bn = bn_1 mod n
+        /// Computes the value of x where x = (x*x) % n
         /// </summary>
         /// <param name="math">The math utils</param>
-        /// <param name="bn_1">Last computed bn_1</param>
-        /// <param name="number">The number to test</param>
-        /// <returns>bn calculated value</returns>
-        protected abstract T Computebn(IMath<T> math, T bn_1, T number);
+        /// <param name="x">The last x calculated value</param>
+        /// <param name="n">The number to test</param>
+        /// <returns>x calculated value</returns>
+        protected abstract T ComputeX(IMath<T> math, T x, T n);
         /// <summary>
-        /// Primality test says a number is composite if bn es equal 1 or -1
+        /// Multiplys d by 2
         /// </summary>
-        /// <param name="math">Math utils if needed</param>
-        /// <param name="bn">The computed value of bn</param>
-        /// <returns>True if the number is composite</returns>
-        protected abstract bool Testbn(IMath<T> math, T bn);
+        /// <param name="d">d variable calc with the Find_d, function</param>
+        /// <returns>d multiplication result</returns>
+        protected abstract T MultiplyBy2(T d);
+        /// <summary>
+        /// Evaluates the boolean operation
+        /// x == 1 || x == number - 1
+        /// </summary>
+        /// <param name="math">The math utils</param>
+        /// <param name="x">X evaluated</param>
+        /// <param name="number">The number to test</param>
+        /// <returns>True if the condition are met</returns>
+        protected abstract bool EvaluateX(IMath<T> math, T x, T number);
+        /// <summary>
+        /// Test x to see if the number is not prime
+        /// x != n-1
+        /// </summary>
+        /// <param name="math">The math utils</param>
+        /// <param name="x">X evaluated</param>
+        /// <param name="number">The number to test</param>
+        /// <returns>True if the condition are met</returns>
+        protected abstract bool TestXForNotPrime(IMath<T> math, T x, T number);
+        /// <summary>
+        /// Check the miller rabin test result on x and d
+        /// d!= number-1 && x!=1 && x != number-1
+        /// </summary>
+        /// <param name="math">The math utils</param>
+        /// <param name="x">X evaluated</param>
+        /// <param name="d">d variable calc with the Find_d, function</param>
+        /// <param name="number">The number to test</param>
+        /// <returns>True if the condition are met</returns>
+        protected abstract bool CheckMillerRabinTest(IMath<T> math, T x, T d, T number);
         /// <summary>
         /// Check if a number is prime, using the primality rabin test
         /// </summary>
@@ -60,25 +87,24 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Helper
         /// <returns>The prime test result</returns>
         public virtual PrimeTestResult MillerRabinTest(IMath<T> math, T number, int trials)
         {
-            PrimeTestResult testFlag = PrimeTestResult.PROBABLY;
             T d = Find_d(math, number);
-            T a, bn_1, bn;
-            a = Find_a(math, number);
-            bn_1 = Computeb0(math, d, a, number);
-            bn = bn_1;
+            T a;
+            T x;
             for (int i = 1; i <= trials; i++)
             {
-                bn = Computebn(math, bn_1, number);
-                if (Testbn(math, bn))
+                a = Find_a(math, number);
+                x = ComputeX(math, d, a, number);
+                if (EvaluateX(math, x, number))
+                    continue;
+                while(CheckMillerRabinTest(math, x, d, number))
                 {
-                    testFlag = PrimeTestResult.COMPOSITE;
-                    break;
+                    x = ComputeX(math, x, number);
+                    d = MultiplyBy2(d);
                 }
-                bn_1 = bn;
+                if (TestXForNotPrime(math, x, number))
+                    return PrimeTestResult.NOT_PRIME;
             }
-            if (!Testbn(math, bn))
-                testFlag = PrimeTestResult.IS_PRIME;
-            return testFlag;
+            return PrimeTestResult.IS_PRIME;
         }
     }
 }
