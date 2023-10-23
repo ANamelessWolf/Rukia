@@ -37,7 +37,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
 
         public int Solve()
         {
-            MathHelper math = new MathHelper();
+            MathHelperInt32 math = new MathHelperInt32();
             Dictionary<int, int> primeFactorFreq = GetPrimeFactors(Last);
             int result = 1;
             foreach (int prime in primeFactorFreq.Keys)
