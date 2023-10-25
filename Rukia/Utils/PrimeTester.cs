@@ -3,7 +3,7 @@ using Nameless.Libraries.Rukia.ProjectEuler.Helper.Interface;
 
 namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
 {
-    public class PrimeTester : MillerRabinHelper<ulong>, IPrimeTester<int>
+    public class PrimeTester : MillerRabinHelper<ulong>, IPrimeTester<int>, IPrimeTester<long>
     {
         public PrimeTestResult QuickTest(int number)
         {
@@ -32,6 +32,18 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
                 testFlag = MillerRabinTest(new MathHelper(), (ulong)number, 10);
             return testFlag == PrimeTestResult.IS_PRIME;
         }
+
+        public PrimeTestResult QuickTest(long number)
+            => QuickTest((int)number);
+
+        public bool IsPrime(long number)
+        {
+            PrimeTestResult testFlag = QuickTest(number);
+            if (testFlag == PrimeTestResult.PROBABLY)
+                testFlag = MillerRabinTest(new MathHelper(), (ulong)number, 10);
+            return testFlag == PrimeTestResult.IS_PRIME;
+        }
+
 
         #region Miller Rabin Calculation
         /// <summary>
