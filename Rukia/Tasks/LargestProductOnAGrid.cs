@@ -11,7 +11,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
 {
     /// <summary>
     /// In the 20×20 grid below, four numbers along a diagonal.
-    /// The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
+    /// The product of these numbers is 26(8,7) × 63(9,8) × 78(10,9) × 14(11,10) = 1788696.
     /// What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
     /// </summary>
     public class LargestProductOnAGrid : ISolution
@@ -58,11 +58,13 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
         {
             int largestProduct = 0, product;
             StringMatrixNavigator nav = new StringMatrixNavigator(GRID);
+            //No es necesario probar todas las direcciones si vamos de arriba abajo, es suficiente probar hacia abajo
+            Direction[] directions = { Direction.down, Direction.left, Direction.right, Direction.diagonal_down_left, Direction.diagonal_down_right };
             for (int y = 0; y < GRID.GetLength(0); y++)
             {
                 for (int x = 0; x < GRID.GetLength(1); x++)
                 {
-                    foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+                    foreach (Direction direction in directions)
                     {
                         product = nav.GetAdjacentProduct(new Position() { X = x, Y = y }, direction, this.Size);
                         if (largestProduct < product)
