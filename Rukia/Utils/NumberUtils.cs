@@ -56,5 +56,54 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
             return reverse;
         }
 
+        public static long GetTriangleNumber(this long index)
+        {
+            return (index * (index + 1)) / 2;
+        }
+
+        public static long GetTriangleNumber(this int index)
+            => NumberUtils.GetTriangleNumber((long)index);
+
+
+        public static List<long> GetFactors(this long number, PrimeTester tester)
+        {
+            List<long> factors = new List<long>();
+            long testDivisor = 2;
+            //All numbers have at least one factor
+            factors.Add(1);
+            if (number > 1)
+                factors.Add(number / 1);
+            while (number > 1 && testDivisor < number && testDivisor < number / testDivisor)
+            {
+                if (number % testDivisor == 0)
+                {
+                    factors.Add(testDivisor);
+                    factors.Add(number / testDivisor);
+                }
+                testDivisor++;
+            };
+            if (testDivisor == number / testDivisor && number % testDivisor == 0)
+                factors.Add(testDivisor);
+            return factors;
+        }
+
+        public static int CountFactors(this long number, PrimeTester tester)
+        {
+            int fCount = 1;
+            long testDivisor = 2;
+            //All numbers have at least one factor
+            if (number > 1)
+                fCount++;
+            while (number > 1 && testDivisor < number && testDivisor < number / testDivisor)
+            {
+                if (number % testDivisor == 0)
+                    fCount += 2;
+                testDivisor++;
+            };
+            if (testDivisor == number / testDivisor && number % testDivisor == 0)
+                fCount++;
+            return fCount;
+        }
+
     }
 }
