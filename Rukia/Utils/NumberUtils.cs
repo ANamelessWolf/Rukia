@@ -105,5 +105,14 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
             return fCount;
         }
 
+        public static long NextCollatzSequence(this long number)
+        {
+            if ((number % 2) == 0)
+                return number / 2;
+            else
+                return 3 * number + 1;
+        }
+        public static int NextCollatzSequence(this int number)
+        => (int)NextCollatzSequence((long)number);
     }
 }
