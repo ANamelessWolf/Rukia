@@ -80,7 +80,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
             return times;
         }
 
-        private string PrintSequence(long test)
+        public string PrintSequence(long test)
         {
             string seq = $"{test}";
             int times = 1;
