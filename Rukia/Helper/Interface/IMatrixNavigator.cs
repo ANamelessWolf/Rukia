@@ -9,7 +9,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Helper.Interface
 {
     public interface IMatrixNavigator<T>
     {
-        T[,] Matrix { get; }
+        T[,] Matrix { get; set; }
 
         T Get(Position p);
 

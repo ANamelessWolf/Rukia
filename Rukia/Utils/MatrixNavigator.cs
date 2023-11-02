@@ -12,7 +12,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
         /// <summary>
         /// The matrix to manipulate
         /// </summary>
-        public T[,] Matrix { get; }
+        public T[,] Matrix { get; set; }
 
         public MatrixNavigator(T[,] matrix) 
         { 
@@ -84,6 +84,10 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
     {
         public int X;
         public int Y;
+        public override string ToString()
+        {
+            return $"({X}, {Y})";
+        }
     }
 
     public enum Direction
