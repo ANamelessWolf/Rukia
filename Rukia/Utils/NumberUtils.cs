@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nameless.Libraries.Rukia.ProjectEuler.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,5 +115,15 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
         }
         public static int NextCollatzSequence(this int number)
         => (int)NextCollatzSequence((long)number);
+
+
+        public static string ToEnglish(this long number)
+        {
+            StringNumber num = new StringNumber(number);
+            return num.EnglishName;
+        }
+        public static string ToEnglish(this int number)
+        => ToEnglish((long)number);
+
     }
 }
