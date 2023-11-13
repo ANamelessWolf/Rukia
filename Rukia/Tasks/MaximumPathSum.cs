@@ -68,9 +68,9 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
 
         public MaximumPathSum(PyramidSize size)
         {
-            var pyramid = this.GetPyramid(size);
-            this.Tree = InitTree(pyramid);
+            this.Tree = InitTree(size);
             this.Total = this.Solve();
+            this.Leaves = new IntBinaryNode[0];
         }
 
         public int Solve()
@@ -78,6 +78,7 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
             int maxSum = 0;
             foreach (var node in this.Leaves)
             {
+                node.Total = node.Calc();
                 if (node.Total > maxSum)
                     maxSum = node.Total;
             }
@@ -90,24 +91,24 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
         }
 
 
-        private string GetPyramid(PyramidSize size)
+        private string[] GetPyramid(PyramidSize size)
         {
             switch (size)
             {
                 case PyramidSize.Tiny:
-                    return TINY_PYRAMID;
+                    return TINY_PYRAMID.Split('@');
                 case PyramidSize.Normal:
-                    return PYRAMID;
+                    return PYRAMID.Split('@');
                 case PyramidSize.Huge:
-                    return "";
+                    return File.ReadAllLines("assets/0067_triangle.txt");
                 default:
-                    return "";
+                    return new string[0];
             }
         }
 
-        private IntBinaryNode InitTree(string data)
+        private IntBinaryNode InitTree(PyramidSize size)
         {
-            string[] lines = data.Split('@');
+            string[] lines = this.GetPyramid(size);
             IntBinaryNode root = null;
             IntBinaryNode[] current = null, next = new IntBinaryNode[0];
             for (int i = 1; i < lines.Length; i++)
@@ -128,6 +129,8 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Tasks
                     current[j].Right = next[j + 1];
                     next[j + 1].AddParent(current[j]);
                 }
+                foreach(IntBinaryNode node in current)
+                    node.Total = node.Calc();
             }
             this.Leaves = next;
             return root;

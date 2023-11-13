@@ -1,9 +1,5 @@
 ﻿using Nameless.Libraries.Rukia.ProjectEuler.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Nameless.Libraries.Rukia.Test.ProjectEuler
 {
@@ -22,6 +18,14 @@ namespace Nameless.Libraries.Rukia.Test.ProjectEuler
         {
             MaximumPathSum test = new MaximumPathSum(PyramidSize.Normal);
             Assert.AreEqual(1074, test.Total);
+        }
+
+        [TestMethod]
+        public void TestHuge()
+        {
+            MaximumPathSum test = new MaximumPathSum(PyramidSize.Huge);
+            Debug.WriteLine(test.Total);
+            Assert.AreEqual(7273, test.Total);
         }
     }
 }

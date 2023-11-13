@@ -7,4 +7,10 @@
     <RootNamespace>Nameless.Libraries.Rukia.ProjectEuler</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="assets\0067_triangle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
