@@ -88,6 +88,9 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
             return factors;
         }
 
+        public static List<int> GetFactors(this int number, PrimeTester tester)=>
+            GetFactors((long)number, tester).Select(i=>(int)i).ToList();
+
         public static int CountFactors(this long number, PrimeTester tester)
         {
             int fCount = 1;
