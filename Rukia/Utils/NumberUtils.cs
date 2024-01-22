@@ -91,6 +91,14 @@ namespace Nameless.Libraries.Rukia.ProjectEuler.Utils
         public static List<int> GetFactors(this int number, PrimeTester tester)=>
             GetFactors((long)number, tester).Select(i=>(int)i).ToList();
 
+
+        public static bool IsAbundant(this int number, PrimeTester tester)
+        {
+            var factors = number.GetFactors(tester).Where(x => x != number);
+            return factors.Sum() > number;
+        }
+           
+
         public static int CountFactors(this long number, PrimeTester tester)
         {
             int fCount = 1;
